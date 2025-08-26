@@ -2,7 +2,7 @@ import pygame
 
 from constants import *
 from shape import *
-from player import *
+from entity import *
 
 def main():
     

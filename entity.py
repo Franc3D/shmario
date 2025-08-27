@@ -1,4 +1,4 @@
-
+import pygame
 
 class Entity():
     def __init__(self, x, y):
@@ -10,6 +10,7 @@ class Entity():
         self.is_grounded = False
         self.is_jumping = False
         
+        self.default_shape = circle(self.x, self.y, ENTITY_DEFAULT_SIZE)
         self.sprite = None
         self.animation_state = "idle"
         

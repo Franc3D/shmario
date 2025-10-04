@@ -3,7 +3,7 @@ import pygame
 class circleshape: #to be overwritten
     def __init__(self, x, y, radius):
         
-        
+        # something about groups to use later... not sure what
         if hasattr(self, "containers"):
             super().__init__(self.containers)
         else:
@@ -15,7 +15,9 @@ class circleshape: #to be overwritten
         self.radius = radius
 
     def draw(self, screen):
-        pygame.draw.circle(screen, (self.x, self.y), self.radius)
+        pass
 
     def update(self, deltatime):
         pass    
+
+

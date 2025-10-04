@@ -8,3 +8,4 @@ PLAYER_MOVEMENT_SPEED = 300  # pixels per second
 PLAYER_JUMP_VELOCITY = -1000  # pixels per second (negative is up somehow)
 GRAVITY = 50  # y velocity acceleration per frame
 
+ENTITY_DEFAULT_SIZE = 10

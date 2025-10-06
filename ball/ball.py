@@ -1,25 +1,40 @@
 import sys, pygame
+from ballclass import *
 pygame.init()
 
 size = width, height = 1500, 1400
-speed = [6, 2]
+speed = [2, 2]
 black = 0, 0, 0
 
 screen = pygame.display.set_mode(size)
 
-ball = pygame.image.load("intro_ball.gif")
-ballrect = ball.get_rect()
+#Managing the game's internal clock
+clock = pygame.time.Clock()
+deltatime = 0
+fixed_fps = 60
+
+#Create ball object taking pos (x, y) image and mass
+ball = Ball(initial_speed=[300, 300])
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
 
-    ballrect = ballrect.move(speed)
-    if ballrect.left < 0 or ballrect.right > width:
-        speed[0] = -speed[0]
-    if ballrect.top < 0 or ballrect.bottom > height:
-        speed[1] = -speed[1]
+    
+    # detect collisions 
+    
+    ball.move(deltatime)
+    
 
     screen.fill(black)
-    screen.blit(ball, ballrect)
+    ball.draw(screen)
     pygame.display.flip()
+    deltatime = clock.tick(fixed_fps) /1000
+
+'''
+Checklist
+- add downward acceleration Force = Mass*gravity
+- add a floor and walls that the ball can bounce off of
+- add a controllable paddle that the ball can bounce off of
+- allow player to turn off gravity
+'''

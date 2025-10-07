@@ -5,9 +5,13 @@ _gravity = 9.81 * 100  # pixels per second squared
 _air_resistance = 0.00001 *5
 
 class Ball:
-    def __init__(self, image_path="intro_ball.gif", position = (100, 100), mass = 1, size_pixel = 50, initial_speed = [0, 0]):
-        self.image = image.load(image_path)      
-        self.image = transform.scale(self.image, (size_pixel, size_pixel))
+    def __init__(self, image_path="intro_ball.gif", position = (100, 100), mass = 1, size_pixel = None, initial_speed = [0, 0]):
+        self.image = image.load(image_path)
+        if size_pixel != None:      
+            self.image = transform.scale(self.image, (size_pixel, size_pixel))
+            self.size = size_pixel
+        else:
+            self.size = self.image.get_width()
 
         self.mass = mass
         self.speed = list(initial_speed)
@@ -17,7 +21,7 @@ class Ball:
 
 
     def move(self, deltatime):
-
+        
         # normalize speed vector
         v = sqrt(self.speed[0]**2 + self.speed[1]**2)
         n = [
@@ -35,13 +39,33 @@ class Ball:
         ]
         
         
-
-        if self.position[0] < 0 or self.position[0] > 1500:
+        # detect collision with walls
+        if self.position[0] - (self.size / 2) < 0 or self.position[0] + (self.size / 2) > 1920:
             self.speed[0] = -self.speed[0]
-        if self.position[1] < 0 or self.position[1] > 1400:
+        if self.position[1] - (self.size / 2) < 0 or self.position[1] + (self.size / 2) > 1080:
             self.speed[1] = -self.speed[1]
+
+        print(self.position)
         
 
     def draw(self, surface):
         self.rectangle = self.image.get_rect(center = self.position)
         surface.blit(self.image, self.rectangle)
+
+class Wall:
+    def __init__(self, top, left, width, height, color="white"):
+        
+        self.rectangle = Rect(left, top, width, height)
+        self.top = top 
+        self.left = left
+        self.width = width
+        self.height = height
+        self.color = color
+    
+    def get_hitbox(self):
+        return self.rectangle
+    
+    def draw(self, surface):
+        draw.rect(surface, self.color, self.rectangle)
+        
+        

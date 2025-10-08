@@ -2,10 +2,10 @@ from pygame import *
 from math import sqrt
 
 _gravity = 9.81 * 100  # pixels per second squared
-_air_resistance = 0.00001 *5
+_air_resistance = 0.00001 *8
 
 class Ball:
-    def __init__(self, image_path="intro_ball.gif", position = (100, 100), mass = 1, size_pixel = None, initial_speed = [0, 0]):
+    def __init__(self, image_path="intro_ball.gif", position = (100, 100), mass = 1, size_pixel = None, initial_speed = [0, 0], squish_percent = 50):
         self.image = image.load(image_path)
         if size_pixel != None:      
             self.image = transform.scale(self.image, (size_pixel, size_pixel))
@@ -16,6 +16,7 @@ class Ball:
         self.mass = mass
         self.speed = list(initial_speed)
         self.position = list(position)
+        self.squish = squish_percent
 
 
 
@@ -25,8 +26,8 @@ class Ball:
         # normalize speed vector
         v = sqrt(self.speed[0]**2 + self.speed[1]**2)
         n = [
-            self.speed[0] / v if v != 0 else 1,
-            self.speed[1] / v if v != 0 else 1
+            self.speed[0] / v if v != 0 else 0.0001,
+            self.speed[1] / v if v != 0 else 0.0001
         ]
 
         self.position =  [
@@ -47,10 +48,20 @@ class Ball:
 
         print(self.position)
         
+    
+    def detect_collision(self, rect):
+        #TO DO TOMORROW
+        pass
 
-    def draw(self, surface):
-        self.rectangle = self.image.get_rect(center = self.position)
-        surface.blit(self.image, self.rectangle)
+    def draw(self, surface, physics_visual = False, rendering_visual = True):
+        if rendering_visual:
+            self.rectangle = self.image.get_rect(center = self.position)
+            surface.blit(self.image, self.rectangle)
+
+        if physics_visual:
+            # Draw squish max range
+            draw.circle(surface, "yellow", self.position, self.size/2 * (self.squish/100), 2)
+            draw.circle(surface, "cyan", self.position, self.size/2, 2)
 
 class Wall:
     def __init__(self, top, left, width, height, color="white"):
@@ -62,7 +73,7 @@ class Wall:
         self.height = height
         self.color = color
     
-    def get_hitbox(self):
+    def get_collision(self):
         return self.rectangle
     
     def draw(self, surface):

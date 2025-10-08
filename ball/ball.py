@@ -35,17 +35,19 @@ while True:
     right_wall.draw(screen)
     floor.draw(screen)
     
-    ball.draw(screen)
+    ball.draw(screen, True, False) # screen, physics_visual, rendering_visual
     pygame.display.flip()
     deltatime = clock.tick(fixed_fps) /1000
 
 '''
 Checklist
 + add downward acceleration Force = Mass*gravity
++ Do a visual for physics and a visual for rendering
+- Add a data display in the top left corner with the ball's speed, position and acceleration
 - add distinct mass for each ball
 - squash and stretch the ball based on speed and direction
 - squash the ball on impact with the walls
-- add a floor and walls that the ball can bounce off of
+- add a floor and walls that the ball can bounce off of Rect.contain 
 - add a controllable paddle that the ball can bounce off of
 - allow player to turn off gravity
 - collision by detecting if the distance between 2 balls < sum of their radius

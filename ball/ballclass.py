@@ -1,4 +1,5 @@
 from pygame import *
+import ballconfig
 from math import sqrt
 
 _gravity = 9.81 * 100  # pixels per second squared
@@ -46,19 +47,19 @@ class Ball:
         if self.position[1] - (self.size / 2) < 0 or self.position[1] + (self.size / 2) > 1080:
             self.speed[1] = -self.speed[1]
 
-        print(self.position)
+        #print(self.position)
         
     
     def detect_collision(self, rect):
         #TO DO TOMORROW
         pass
 
-    def draw(self, surface, physics_visual = False, rendering_visual = True):
-        if rendering_visual:
+    def draw(self, surface):
+        if ballconfig.RENDERING_VISUAL:
             self.rectangle = self.image.get_rect(center = self.position)
             surface.blit(self.image, self.rectangle)
 
-        if physics_visual:
+        if ballconfig.PHYSICS_VISUAL:
             # Draw squish max range
             draw.circle(surface, "yellow", self.position, self.size/2 * (self.squish/100), 2)
             draw.circle(surface, "cyan", self.position, self.size/2, 2)
@@ -77,6 +78,8 @@ class Wall:
         return self.rectangle
     
     def draw(self, surface):
-        draw.rect(surface, self.color, self.rectangle)
-        
+        if ballconfig.RENDERING_VISUAL:
+            draw.rect(surface, self.color, self.rectangle)
+        if ballconfig.PHYSICS_VISUAL:
+            draw.rect(surface, "red", self.rectangle, 2)
         

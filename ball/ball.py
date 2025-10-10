@@ -3,7 +3,6 @@ from ballclass import *
 import ballconfig
 pygame.init()
 
-size = width, height = 1920, 1080
 speed = [2, 2]
 black = 0, 0, 0
 
@@ -23,9 +22,9 @@ right_wall = Wall(0, ballconfig.SCREEN_WIDTH-100, 100, 1080, color="brown")
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
-
+        
         if event.type == pygame.KEYDOWN:
-            print("V key pressed")
+            # On V keypress rotate the view type
             if event.key == pygame.K_v:
                 if ballconfig.RENDERING_VISUAL and ballconfig.PHYSICS_VISUAL is False:
                     ballconfig.RENDERING_VISUAL = False
@@ -45,8 +44,6 @@ while True:
     screen.fill(black)
     
 
-    #PHYSICS_VISUAL = False
-    #RENDERING_VISUAL = True
 
     if ballconfig.PHYSICS_VISUAL:
         # Draw grid
@@ -70,6 +67,9 @@ Checklist
     +Add a grid to the background
     +on V press switch the display mode
     -Show a line for the highest point the ball has reached per bounce
+- record the max speed reached by the ball
+    - Use this information to scale the squish as a % of the max speed
+    - Probably need to use vector2d for the speed and orientation
 - Add a data display in the top left corner with the ball's speed, position and acceleration
 - add distinct mass for each ball
 - squash and stretch the ball based on speed and direction

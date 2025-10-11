@@ -5,6 +5,7 @@ pygame.init()
 
 speed = [2, 2]
 black = 0, 0, 0
+size = ballconfig.SCREEN_WIDTH, ballconfig.SCREEN_HEIGHT
 
 screen = pygame.display.set_mode(size)
 
